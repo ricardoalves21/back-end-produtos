@@ -40,4 +40,9 @@ public class CidadeService {
     public void excluirCidadePorId(Long id) {
         cidadeRepository.deleteById(id);
     }
+
+    public Cidade atualizarCidade(Cidade cidade) {
+        Cidade cidadeAtualizada = cidadeRepository.save(cidade);
+        return cidadeAtualizada;
+    }
 }

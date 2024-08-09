@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -26,7 +25,6 @@ public class CidadeController {
 
     @PostMapping("/criar")
     public ResponseEntity<Cidade> cadastrarCidade(@RequestBody Cidade cidade) {
-
         try {
             cidadeService.cadastroCidade(cidade);
             return new ResponseEntity<Cidade>(HttpStatus.CREATED);
@@ -45,28 +43,58 @@ public class CidadeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Cidade> buscarCidadePorId(@PathVariable Long id) {
+        try {
+            Cidade cidade = cidadeService.buscarCidadePorId(id);
 
-        Cidade cidade = cidadeService.buscarCidadePorId(id);
-
-        if(cidade != null) {
-          return new ResponseEntity<>(cidade, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Cidade>(HttpStatus.NOT_FOUND);
+            if(cidade != null) {
+                return new ResponseEntity<>(cidade, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Cidade>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar o produto: " + e.getMessage(), e);
         }
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Cidade> excluirCidadePorId(@PathVariable Long id) {
+        try {
+            Cidade cidade = cidadeService.buscarCidadePorId(id);
 
-        Cidade cidade = cidadeService.buscarCidadePorId(id);
-
-        if (cidade != null) {
-            cidadeService.excluirCidadePorId(id);
-            return new ResponseEntity<Cidade>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Cidade>(HttpStatus.NOT_FOUND);
+            if (cidade != null) {
+                cidadeService.excluirCidadePorId(id);
+                return new ResponseEntity<Cidade>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Cidade>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar o produto: " + e.getMessage(), e);
         }
+
+    }
+
+
+    @PutMapping("/atualizar")
+    public ResponseEntity<Cidade> atualizarCidade(@RequestBody Cidade cidade) {
+        try {
+            Cidade encontrarCidade = cidadeService.buscarCidadePorId(cidade.getId());
+
+            if(encontrarCidade != null) {
+                Cidade cidadeAtualizada = cidadeService.atualizarCidade(cidade);
+                return new ResponseEntity<>(cidadeAtualizada, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar o produto: " + e.getMessage(), e);
+        }
+    }
+
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 
 }

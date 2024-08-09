@@ -14,9 +14,12 @@ public class Cidade {
 
     private String nome;
 
-//    @OneToMany(mappedBy = "cidade")
-//    private Set<Produto> produtos;
+    public Cidade(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 
+    public Cidade() {}
 
     // Getters e Setters
 
