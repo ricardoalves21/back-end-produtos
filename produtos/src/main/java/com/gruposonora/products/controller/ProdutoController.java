@@ -40,8 +40,12 @@ public class ProdutoController {
 
     @GetMapping("/listar")
     public ResponseEntity<List<Produto>> listarProdutos() {
-        List<Produto> produtos = produtoService.listarProdutos();
-        return new ResponseEntity<>(produtos, HttpStatus.OK);
+        try {
+            List<Produto> produtos = produtoService.listarProdutos();
+            return new ResponseEntity<>(produtos, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
 
 

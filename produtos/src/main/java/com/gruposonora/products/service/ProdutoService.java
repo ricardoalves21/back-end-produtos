@@ -2,7 +2,10 @@ package com.gruposonora.products.service;
 
 import com.gruposonora.products.model.Produto;
 import com.gruposonora.products.repository.ProdutoRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,27 +24,55 @@ public class ProdutoService {
 
 
     public Produto buscarProdutoPorId(Long id) {
-        Optional<Produto> produto = produtoRepository.findById(id);
-        return produto.orElse(null);
+        try {
+            Optional<Produto> produto = produtoRepository.findById(id);
+            return produto.orElse(null);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
 
 
     public void cadastrarProduto(Produto produto) {
-        produtoRepository.save(produto);
+        try {
+            produtoRepository.save(produto);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
 
 
     public List<Produto> listarProdutos() {
-        List<Produto> produtos = produtoRepository.findAll();
-        return produtos;
+        try {
+            List<Produto> produtos = produtoRepository.findAll();
+            return produtos;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
+
 
     public void excluirProdutoPorId(Long id) {
-        produtoRepository.deleteById(id);
+        try {
+            produtoRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
 
+
     public Produto atualizarProduto(Produto produto) {
-        Produto produtoAtualizado = produtoRepository.save(produto);
-        return produtoAtualizado;
+        try {
+            Produto produtoAtualizado = produtoRepository.save(produto);
+            return produtoAtualizado;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
+    }
+
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 }

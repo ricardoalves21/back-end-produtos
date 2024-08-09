@@ -36,8 +36,12 @@ public class CidadeController {
 
     @GetMapping("/listar")
     public ResponseEntity<List<Cidade>> listarCidades() {
-        List<Cidade> cidades = cidadeService.listarCidades();
-        return new ResponseEntity<List<Cidade>>(cidades, HttpStatus.OK);
+        try {
+            List<Cidade> cidades = cidadeService.listarCidades();
+            return new ResponseEntity<List<Cidade>>(cidades, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
 
 
@@ -71,7 +75,6 @@ public class CidadeController {
         } catch (Exception e) {
             throw new RuntimeException("Erro ao atualizar o produto: " + e.getMessage(), e);
         }
-
     }
 
 

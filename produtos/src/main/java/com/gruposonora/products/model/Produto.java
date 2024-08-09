@@ -23,7 +23,6 @@ public class Produto {
     @JoinColumn(name = "CIDADE_ID", nullable = false)
     private Cidade cidade;
 
-
     //Getters e Setters
 
     public Long getId() {

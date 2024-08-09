@@ -33,19 +33,31 @@ public class CidadeService {
 
 
     public List<Cidade> listarCidades() {
-        List<Cidade> cidades = cidadeRepository.findAll();
-        return cidades;
+        try {
+            List<Cidade> cidades = cidadeRepository.findAll();
+            return cidades;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
 
 
     public Cidade buscarCidadePorId(Long id) {
-        Optional<Cidade> cidade = cidadeRepository.findById(id);
+        try {
+            Optional<Cidade> cidade = cidadeRepository.findById(id);
             return cidade.orElse(null);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
 
 
     public void excluirCidadePorId(Long id) {
-        cidadeRepository.deleteById(id);
+        try {
+            cidadeRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
     }
 
 
