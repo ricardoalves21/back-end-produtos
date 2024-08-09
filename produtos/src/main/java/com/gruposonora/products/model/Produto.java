@@ -10,12 +10,17 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private Double valor;
+
+    @Column(nullable = false)
     private Double estoque;
 
     @ManyToOne
-    @JoinColumn(name = "CIDADE_ID")
+    @JoinColumn(name = "CIDADE_ID", nullable = false)
     private Cidade cidade;
 
 

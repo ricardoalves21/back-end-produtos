@@ -26,7 +26,7 @@ public class CidadeController {
     @PostMapping("/criar")
     public ResponseEntity<Cidade> cadastrarCidade(@RequestBody Cidade cidade) {
         try {
-            cidadeService.cadastroCidade(cidade);
+            cidadeService.cadastrarCidade(cidade);
             return new ResponseEntity<Cidade>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<Cidade>(HttpStatus.INTERNAL_SERVER_ERROR);

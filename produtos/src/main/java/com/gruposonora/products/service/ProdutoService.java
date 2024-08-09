@@ -40,7 +40,7 @@ public class ProdutoService {
         produtoRepository.deleteById(id);
     }
 
-    public Produto atualizaProduto(Produto produto) {
+    public Produto atualizarProduto(Produto produto) {
         Produto produtoAtualizado = produtoRepository.save(produto);
         return produtoAtualizado;
     }

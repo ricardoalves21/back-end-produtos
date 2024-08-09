@@ -3,7 +3,10 @@ package com.gruposonora.products.service;
 
 import com.gruposonora.products.model.Cidade;
 import com.gruposonora.products.repository.CidadeRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +23,12 @@ public class CidadeService {
     }
 
 
-    public void cadastroCidade(Cidade cidade) {
-        cidadeRepository.save(cidade);
+    public void cadastrarCidade(Cidade cidade) {
+        try {
+            cidadeRepository.save(cidade);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao cadastrar cidade.", e);
+        }
     }
 
 
@@ -41,8 +48,19 @@ public class CidadeService {
         cidadeRepository.deleteById(id);
     }
 
+
     public Cidade atualizarCidade(Cidade cidade) {
-        Cidade cidadeAtualizada = cidadeRepository.save(cidade);
-        return cidadeAtualizada;
+        try {
+            Cidade cidadeAtualizada = cidadeRepository.save(cidade);
+            return cidadeAtualizada;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar cidade.", e);
+        }
+    }
+
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 }

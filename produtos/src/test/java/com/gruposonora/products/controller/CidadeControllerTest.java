@@ -58,7 +58,7 @@ class CidadeControllerTest {
         String json = "{}";
 
         Mockito.doThrow(new RuntimeException("Erro ao cadastrar cidade"))
-                .when(service).cadastroCidade(Mockito.any(Cidade.class));
+                .when(service).cadastrarCidade(Mockito.any(Cidade.class));
 
         //ACT
         var response = mvc.perform(

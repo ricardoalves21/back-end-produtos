@@ -19,6 +19,10 @@ public class Cidade {
         this.nome = nome;
     }
 
+    public Cidade(Long id) {
+        this.id = id;
+    }
+
     public Cidade() {}
 
     // Getters e Setters

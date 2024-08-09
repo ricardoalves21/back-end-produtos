@@ -78,7 +78,7 @@ public class ProdutoController {
         try {
             Produto produtoEncotrado = produtoService.buscarProdutoPorId(produto.getId());
             if (produtoEncotrado != null) {
-                Produto produtoAtual = produtoService.atualizaProduto(produto);
+                Produto produtoAtual = produtoService.atualizarProduto(produto);
                 return new ResponseEntity<>(produtoAtual, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

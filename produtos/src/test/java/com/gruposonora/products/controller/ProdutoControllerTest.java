@@ -96,7 +96,7 @@ class ProdutoControllerTeste {
 
         // Mockando o comportamento do serviço
         when(service.buscarProdutoPorId(3L)).thenReturn(produtoAtualizado);
-        when(service.atualizaProduto(any(Produto.class))).thenReturn(produtoAtualizado);
+        when(service.atualizarProduto(any(Produto.class))).thenReturn(produtoAtualizado);
 
         // JSON mockado que será enviado na requisição PUT
         String json = """
@@ -140,7 +140,7 @@ class ProdutoControllerTeste {
         // Mockando o comportamento do serviço
         when(service.buscarProdutoPorId(3L)).thenReturn(produtoAtualizado);
         Mockito.doThrow(new RuntimeException("Erro ao atualizar produto"))
-                .when(service).atualizaProduto(Mockito.any(Produto.class));
+                .when(service).atualizarProduto(Mockito.any(Produto.class));
 
         // JSON mockado que será enviado na requisição PUT
         String json = """
