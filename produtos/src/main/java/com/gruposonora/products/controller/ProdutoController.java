@@ -11,6 +11,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200") // Quero permitir o CORS apenas para essa origem
 @RequestMapping("/produto")
 public class ProdutoController {
 
